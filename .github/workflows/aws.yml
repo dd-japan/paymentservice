@@ -45,7 +45,7 @@ permissions:
 
 jobs:
   deploy:
-    name: Deploy                              #Kihara-sanはここがBuildでも成功している　Kishida-sanはDeployでOK
+    name: Deploy                              #nameはただのLabelであるよう
     runs-on: ubuntu-latest
     environment: production
 
