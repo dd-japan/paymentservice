@@ -50,10 +50,10 @@ jobs:
       #  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       #  aws-region: ${{ env.AWS_REGION }}
       with:
-        aws-region: ${{ env.AWS_REGION }}
         role-to-assume: arn:aws:iam::601427279990:role/taka2-ecr-githubactions
         role-session-name: taka2rolesession
-     
+        aws-region: ${{ env.AWS_REGION }}    
+        
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
