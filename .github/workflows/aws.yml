@@ -37,14 +37,14 @@ jobs:
   deploy:
     name: Deploy                              #nameはただのLabelであるよう
     runs-on: ubuntu-latest
-    # environment: production
+    # environment: production                 #CommentOutしないとGithub Actionでエラーになる
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3                #update from v3 to v4
+      uses: actions/checkout@v3
 
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4    #update from v1 to v3
+      uses: aws-actions/configure-aws-credentials@v4    #update from v1 to v4
       # with:
       #  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
       #  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
