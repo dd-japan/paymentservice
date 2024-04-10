@@ -31,18 +31,20 @@ on:
     branches: [ "main" ]
 
 env:
-  AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: MY_ECR_REPOSITORY           # set this to your Amazon ECR repository name
+  AWS_REGION: us-east-1                    # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: b1o7r7e0/taka2-pub-dd           # set this to your Amazon ECR repository name
   # ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
   # ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
   # ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
   # CONTAINER_NAME: MY_CONTAINER_NAME           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
-
+                                               
+# Reference https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services
 permissions:
-  contents: read
-
+  id-token: write # This is required for requesting the JWT
+  contents: read  # This is required for actions/checkout
+  
 jobs:
   deploy:
     name: Deploy                              #nameはただのLabelであるよう
@@ -51,18 +53,24 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4                #update from v3 to v4
 
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v1
+      uses: aws-actions/configure-aws-credentials@v3    #update from v1 to v3
+      # with:
+      #  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #  aws-region: ${{ env.AWS_REGION }}
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        role-to-assume: arn:aws:iam::601427279990:role/taka2-ecr-githubactions
+        role-session-name: taka2rolesession
         aws-region: ${{ env.AWS_REGION }}
-
+        
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+      with:
+          registry-type: public                  #add public
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
