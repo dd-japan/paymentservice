@@ -37,7 +37,7 @@ jobs:
   deploy:
     name: Deploy                              #nameはただのLabelであるよう
     runs-on: ubuntu-latest
-    environment: production
+    # environment: production
 
     steps:
     - name: Checkout
