@@ -36,7 +36,7 @@ permissions:
 jobs:
   deploy:
     name: Deploy                              #nameはただのLabelであるよう
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest                    #テストコメント
     # environment: production                 #Comment OutしないとGithub Actionでエラーになる
 
     steps:
