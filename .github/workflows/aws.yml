@@ -37,7 +37,7 @@ jobs:
   deploy:
     name: Deploy                              #nameはただのLabelであるよう
     runs-on: ubuntu-latest
-    # environment: production                 #CommentOutしないとGithub Actionでエラーになる
+    # environment: production                 #Comment OutしないとGithub Actionでエラーになる
 
     steps:
     - name: Checkout
